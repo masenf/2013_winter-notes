@@ -1,0 +1,113 @@
+=========================
+CSCI 410 Notes 2013/01/09
+=========================
+
+Programming Language Paradigms
+==============================
+
+Two main families:
+
+Declarative:
+    Language describes what the problems solution should look like
+Imperative:
+    Language describes the algorithm to reach the solution
+
+    Imperative languages are predominant because in most cases, we must
+    specify the algorithms ourselves
+
+    Largely reflective of Von Neumann architecture AND *how we as programmers
+    see the world*
+
+Declarative Examples:
+---------------------
+
+* Functional
+  
+  * Lisp, scheme, haskell
+
+* Logical
+
+  * Prolog, SQL
+
+.. code:: scheme
+
+    (define factorial
+      (lambda (n)
+        (if (eq n 0)
+          1
+          (* n (factorial (- n 1))))))
+
+.. code:: prolog
+
+    factorial(N,F) :-
+        N > 0,
+        N1 is N-1,
+        factorial(N1, F1),
+        F is N * F1,
+
+Declarative languages shift a lot of the burden of implementation to the 
+interpretter/compiler authors.
+
+
+Imperative Examples:
+--------------------
+
+* Procedural
+ 
+  * Pascal, C, Ada83
+
+* Object Oriented
+
+  * Java, C++, Ada95
+
+.. code:: c
+
+    int factorial (int num)
+    {
+        int i;
+        int res = 1;
+        for (i = num; i >= 1; i++)
+            res = res * i;
+        return res;
+    }
+
+Object oriented languages represent a shift in how programmers approach problems,
+instead of external routines which operate on data structures. The data structures 
+are encapsulated in a class along with the routines which operate on that object.
+
+Object oriented languages bring the following features to procedural languages:
+
+1. Inheritence: create a new object by extending or changing an existing object
+2. Polymorphism: calling different functions with the same name based on data type
+
+Translations
+============
+
+Compilation vs. interpretation
+
+Generally interpretation is more flexible at runtime at the expense of execution speed.
+
+Pure compilation:: 
+
+    source program ==> Compiler ==> target program (once)
+
+    input ==> target program ==> output
+
+Pure interpretation::
+
+    source program --+ ==> Interpretter ==> output
+                    /
+    input ----------
+
+Mix of both (Java, C#)::
+
+    source program ==> Translator ==> intermediate program (once)
+    
+    intermediate program --+ ==> Virtual Machine ==> output
+                          /
+    input ----------------
+
+This mix is a tradeoff between running time and flexibility. Translated intermediate
+programs only need to be translated once, and it will run on *any* architecture
+for which there exists a Virtual Machine which understands the language of the
+translator.

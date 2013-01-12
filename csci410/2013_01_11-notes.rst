@@ -1,0 +1,107 @@
+=========================
+CSCI 410 Notes 2013/01/11
+=========================
+
+Phases of a Compiler
+====================
+
+::
+
+  high-level      +-------------------+
+    source   ---> | lexical analyzer  |
+                  +-------------------+
+                  |  syntax analyzer  |
+                  +-------------------+
+                  | semantic analyzer |
+                  +-------------------+
+                  | intermediate code | 
+                  |     generator     |
+                  +-------------------+
+                  |   code optimizer  |
+                  +-------------------+
+                  |    native code    |
+                  |     generator     | --> machine code
+                  +-------------------+
+
+Lexical Analyzer (Tokenizer):
+    Group sequence of characters in 'lexemes', the smallest meaningful entities
+    in a language (keywords, identifiers, constants). Whitespace, newlines, 
+    comments, etc are removed in this phase.
+
+    Flex/lex will help us generate a lexer based on regular patterns
+
+    Input: a stream of characters
+
+    Output: a stream of tokens
+Syntax Analyzer:
+    Parse the tokens into a tree representations of related tokens. This is based
+    on the context-free grammar of the language
+
+    Bison and Yacc will be used to generate a parser based on a gramma
+
+    Input: a stream of tokens
+
+    Output: a parse tree (Abstract Syntax Tree - AST)
+Semantic Analyzer:
+    What is the 'meaning' of the program? Check for undefined variables, type
+    system issues, scope checking.
+
+    Input: AST
+
+    Output: Annotated AST w/ symbol table
+
+After passing these three phases (the front-end) of the compiler, we say that
+a program is **valid**.
+
+Intermediate Code Generator:
+    Generate machine independent bytecode from the AST. Enables the optimizer to 
+    operate on a architecture independent basis.
+
+    Input: Annotated AST
+
+    Output: Bytecode
+Code Optimizer:
+    Operates via data flow analysis, constant propagations, dead code elimination, 
+    inlining, etc
+
+    Input: Bytecode
+
+    Output: Bytecode
+Native Code Generator:
+    Machine dependent step to produce targeted binary code for a given architecture.
+    Some optimations may further be done on the output, but not necessarily. This
+    is considered the backend of the compiler (the part that needs to be ported).
+
+    Input: Bytecode
+    
+    Output: Native binary code
+
+Tokenizer
+=========
+
+.. code:: c
+
+   double f = sqrt(-1);
+
+===========   ===========
+   Token         Value
+===========   ===========
+T_DOUBLE      "double"
+T_IDENT       "f"
+T_OP          "="
+T_IDENT       "sqrt"
+T_LPAREN      "("
+T_OP          "-"
+T_INTCONST    "1"
+T_RPAREN      ")"
+T_SEP         ";"
+===========   ===========
+
+We must define these tokens and the patterns which map to them.
+
+Typical token class/types for a programming language:
+
+* A single reserved word: CLASS, INT, CHAR, etc
+* A single operator: LE(<=), EQ(==), ADD(+), NE(!=), etc
+* A single separator: LPAREN, RPAREN, SEMIC, COMMA
+* The group of all legal identifiers (variable names): IDENT

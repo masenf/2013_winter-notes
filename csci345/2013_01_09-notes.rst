@@ -1,0 +1,58 @@
+=========================
+CSCI 345 Notes 2013/01/09
+=========================
+
+Object oriented design, day one... Will anything useful happen?
+
+Enrollment code: 75952
+
+Where do objects come from? The stork.
+
+Example: A payroll system
+-------------------------
+
+* Common attributes
+
+  * Name
+  * SSN
+  * etc
+
+* Weekly (Exempt)
+
+  * $W/week
+
+* Hourly (Non-Exempt)
+
+  * $H / hour
+  * $1.50 * H / hour (over 40)
+
+We have two different kinds of employees with different payroll calculation
+algorithms, although everything else is the same...
+
+Data Structure #1
+=================
+
+  * Tag -- employee type
+  * Employee details (name, SSN, etc)
+  * Hourly hours
+  * Weekly hours
+
+The hourly and weekly hours are *non-semantic* attributes, they don't always
+have meaning in every possible context. No compile time checking of correctness.
+This method is definitely possible, but fraught with peril -- 
+higher liklihood that the programmer will create bugs. More opportunities ==
+more bugs.
+
+Data Structure #2
+=================
+
++----------------+
+|Tag             |
++----------------+
+|common          |
++--------+-------+
+|hourly  | weekly|
++--------+-------+
+
+This is a variant record in Ada or a union in C. These structures are unchecked
+in C.

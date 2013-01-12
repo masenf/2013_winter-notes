@@ -1,0 +1,64 @@
+=========================
+CSCI 345 Notes 2013/01/10
+=========================
+
+Polymorphism
+------------
+
+* Behavior: set functions or procedures that operate on a data type
+* Modification and extension: no more switch statements on data type!
+
+From the previous lecture, we'll take data structure #2 and replace
+the tag with a pointer to a function which computes employee pay
+
++----------------+
+|Function ptr    |
++----------------+
+|common          |
++--------+-------+
+|hourly  | weekly|
++--------+-------+
+
+The data structure doesn't need extra fields for hourly and weekly, 
+as long as the function pointer can calculate the value for payroll
+everything is okay.
+
+Limitations: most data types have more than one behavior. Adding 
+multiple function pointers to *each* instance of a data type 
+results in wasted space.
+
+Duplication is a smell.
+
+The solution to the duplication problem is to have the tag point to
+an fixed array of pointers for each behavior. This solves the problem
+of extensibility, duplication, and a souce of bugs.
+
+Problems building software
+--------------------------
+
+* Analysis: *What* is the code supposed to do? What am I trying to accomplish?
+* Design: *How* is the code to be written and organized? Implement common behaviors.
+* Build
+* Test: separating behaviors allows for easier test cases
+
+Classic Object Orientation
+--------------------------
+
+First use of OO
+
+* SIMULA in the late 60s.
+* Used to simulate systems. Simulations fall very cleanly into the OO structure
+* Often simulation on a mainframe was more economical than actually building the
+  system.
+* Modelling different objects with similar behaviors or similar objects with different behaviors
+
+Then in the 70s...
+
+* Xerox PARC creates Smalltalk to design graphical user interfaces
+* GUIs are also an perfect fit for object orientation.
+* Objects: window, controls, menus, events
+* Behaviors: handlers, rendering, close, minimize, etc
+* Naturally hierarchical - click on window, passes to sub-object which 
+  has a bounding box around the click location, sub-object handles event.
+
+

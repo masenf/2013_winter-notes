@@ -1,0 +1,29 @@
+Programming Languages
+=====================
+
+Analogous to natural language:
+
+=============  ===========
+Natural        Programming
+=============  ===========
+words/symbols  lexical rules/patterns (regular expressions and automata)
+statement      syntactic grammer (context-free grammar -- seek deterministic)
+semantics      *meaning* of statements (scope and type checking)
+=============  ===========
+
+Other issues
+------------
+- operations
+- control structures
+- subprograms
+- parameter passing
+
+  * pass by value
+  * pass by reference
+
+- recursion
+- storage management strategy
+
+  * automatic garbage collection
+  * reference counting
+  * manual memory management

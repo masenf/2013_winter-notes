@@ -1,0 +1,94 @@
+==========================
+CSCI 497a Notes 2013/01/10
+==========================
+
+Communication Costs
+===================
+
+Two types of message passing (less important with a full crossbar switch):
+
+Store and forward
+-----------------
+
+* Packet -- message broken into pieces
+
+  * the size affects routing
+  * node stores each packet and then forwards them to the next recipient
+
+* Cut through routing: the first 'small' packet tells a node to
+  open up a connection to the next peer. This stays open for the
+  next packets to route through.
+
+======================    ===
+Time                      Sym
+======================    ===
+Startup time              t_s
+Per-hop time              t_h
+Per word transfer line    t_w
+======================    ===
+
+Store and forward over l links, size m
+
+::
+
+    t_comm = t_s + (m * t_w + t_h) * l
+    t_h very small: t_s + m * l * t_w
+    cut through: t_s + l * t_w
+
+Congestion can effect costs: mesh network neighbors vs. cross-mesh communication
+
+Routing mechanisms
+
+* minimal - shortest path
+* non-minimal - may take longer path
+* deterministic routing
+* adaptive routing (based on congestio)
+
+  * chaotic routing - keep the data in motion, don't wait for busy links.
+    can be faster than deterministic, but may also be a detriment, you don't know.
+
+* dimension-ordered routing --> deterministic
+
+  * mesh: xy
+  * hypercube: based on source and destination p number
+
+Tradeoffs
+=========
+
+* cost vs. performance
+* algorithms vs. hardware architecture
+
+Parallel Algorithms & Design
+============================
+
+Sequential: data & program
+
+Parallel
+
+* what can be done in parallel?
+* mapping concurrent work
+* distribution of data to threads: not a consideration in sequential design
+* "shared data" management
+* thread synchronization: dependent on interconnection hierarchy, language
+
+Approaching Parallel Algorithms
+-------------------------------
+
+**From serial program?** 
+
+Less efficient because serial programs have data dependencies. Simple translation
+to threads by rolling out a loop results in many sync barriers as opposed to
+true cooperation. Further, it is harder for a human programmer to reason about
+which parts of an algorithm are parallelizable.
+
+**From problem statement?**
+
+Jacobi Iterations
+-----------------
+
+In the parallel version, determining the max incurs the greatest burden: O(lg(n))
+
+Calculating the grid is O(1)
+
+So we'll do lg(n) calculations before determining the max diff, this balances 
+the computation time.

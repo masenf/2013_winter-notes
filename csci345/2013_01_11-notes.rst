@@ -1,0 +1,84 @@
+=========================
+CSCI 345 Notes 2013/01/11
+=========================
+
+Payroll example written out in Ada
+==================================
+
+.. code:: ada
+
+    type Payroll_Type is (Hourly, Weekly);
+    type Name_String is String(1..20);
+    type Hourly_Rate_Type is ...;
+    type Weekly_Rate_Type is ...;
+    type Employee_Type is record
+        Pay_Type   : Payroll_Type;
+        Name       : Name_String;
+        Hourly_Pay : Hourly_Pay_Type;
+        Weekly_Pay : Weekly_Pay_Type;
+    end record;
+
+    procedure Compute_Pay_Cheque ( Emp : in Employee_Type;
+                                   Pay : out Payment_Type; ) is
+    begin
+        case Emp.Pay_Type is                                -- this type of logic is
+            when Hourly => Compute_Hourly_Pay(Emp, Pay);    -- referred to as dispatching
+            when Weekly => Compute_Weekly_Pay(Emp, Pay);    -- or forwarding
+        end case;
+    end Compute_Pay_Cheque;
+
+
+Using a variant record
+----------------------
+
+.. code:: ada
+
+    type Employee_Type (Pay_Type: Payroll_Type) is record
+        Name : Name_String;
+        case Pay_Type is
+            when Hourly =>
+                Hourly_Pay : Hourly_Pay_Type;
+            when Weekly =>
+                Weekly_Pay : Weekly_Pay_Type;
+        end case;
+    end record;
+
+Not often used anymore due to inflexibilities. Large and complex behaviors
+are a pain to maintain in a variant record format. No inheritence, no 
+polymorphism, no dynamic dispatching. This is how things were handled in Ada '83
+before objects were a part of the language.
+
+Adding a new employee:
+
+  * Add new case to variant record
+  * Add new case to dispatching function
+  * Add new procedure to compute the pay for this employee type
+  * Recompile every piece of code which touches Employee_Type record
+  * Test?
+
+Using a tagged record
+---------------------
+
+.. code:: ada
+    
+    type Employee_Type is abstract tagged record
+        Name : Name_String;
+    end record;
+
+    type Hourly_Employee_Type is new Employee_Type with record
+        Hourly_Pay : Hourly_Pay_Type;
+    end record;
+
+    type Weekly_Employee_Type is new Employee_Type with record
+        Weekly_Pay : Weekly_Pay_Type;
+    end record;
+
+    -- this is a primitive operation
+    procedure Compute_Pay_Check ( Emp : in Employee_Type;
+                                  Pay : out Paycheck_Type; ) is abstract;
+
+    procedure Compute_Pay_Check ( Emp : in Hourly_Employee_Type;
+                                  Pay : out Paycheck_Type; ) is
+    begin
+        ...
+    end;

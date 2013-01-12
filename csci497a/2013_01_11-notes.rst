@@ -1,0 +1,91 @@
+==========================
+CSCI 497a Notes 2013/01/11
+==========================
+
+Approaching Parallel Algorithms
+===============================
+
+Jacobi Iterations (continued)
+-----------------------------
+
+1. Sequential running time: O(mn^2)
+2. Using data dependency diagonal parallel algorithm: O(mn) (with n processors)
+3. Using two data arrays: O(m lg n) (with n^2 processors)
+
+The lg n term results from naively calculating the max after each
+iteration. Lg n assumes that the processors must pass messages in a tree-like
+fashion.
+
+If a shared memory solution is used, perhaps the lg n term can be reduced to constant.
+However, because of the fan-out issue with cache invalidation and other *real* 
+hardware limitations the constant term is actually a lg n term as well.
+
+Design
+------
+
+We're ignoring automatic tools to do: seq. code ==> tool ==> parallel solution
+
+Often the best that these tools can do is limited by how the algorithm is
+expressed sequentially. It's often better to rethink the problem and 
+implement a parallel solution.
+
+* Start with problem
+* Look for parallelism
+
+  * dependency graph (ex: dense matrix multiply)
+  * amount of parallelism (disjoint sets of nodes can be computed in parallel)
+
+* Consider available parallelism
+
+  * granularity - fine grained vs. course grained (can't run processes on a GPU)
+
+Other considerations
+--------------------
+
+* Data and thread placement (in memory)
+* Thread interaction (full blocking barriers, async messages, etc)
+* Processes or Processors
+
+* Let the problem help design the solution!
+
+  * Task generation
+
+    * Static situation (know beforehand how many tasks to start)
+    * Dynamic situation (tree)
+
+  * Task size: very small to very large
+
+    * Depends on cost of starting a new task
+
+  * Task data
+  * Task communication
+
+    * static vs. dynamic
+    * regular vs. irregular
+    * read-only vs. read/write
+    * one-way vs. two-way
+
+  * Load balancing
+
+    * static, dynamic mapping
+
+Why use a **static** solution? Dynamic solutions may require extra computation and
+communication over static systems.
+
+Decomposition Techniques
+------------------------
+
+* Divide and conquer (recursive): a nice fit for parallelism because often the 
+  divided subproblems are disjoint or mostly disjoint. *Tendency to produce
+  hypercube communication structures*
+* Data decomposition: partition the data first, then process the partitions
+* Exploratory decompositions
+
+  * Search tree decompositions: search two subtrees simultaneously
+
+* Speculative decompositions
+
+  * Parallel discrete event simulation
+  * ex: evaluating more than one path of a switch statement
+
+* Hybrid decomposition -- combinations of the above

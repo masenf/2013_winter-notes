@@ -1,0 +1,82 @@
+================
+Notes 2013/01/19
+================
+
+Classes of Parallel computers
+=============================
+
+SIMD - Single instruction, multiple data:
+    All CPUs execute the same instruction at the same time. Parallel
+    computation achieved by processing different data by each core
+
+    **Application**: graphics processing
+MIMD - Multiple instruction, multiple data:
+    Each cpu has it's own program and data. Sync via communication.
+    CPU access to memory.
+SPMD - Single program multiple data (Not really a parallel computer)
+    Not necessarily the *same* instruction, but usually the same
+    program.
+
+    Usually run on MIMD machine; runs well on cluster or multi-core CPU
+
+Communication
+=============
+
+Shared Memory Theoretical Model
+-------------------------------
+
+* One memory, Many CPUs -- must syncronize for access
+* Cache coherence problems
+* PRAM -- hypothetical random access machine with infinite memory and
+  infinite word size.
+
+  * Concurrent read/write among **n** CPUs -- everyone can read and write
+    to memory without locking. 
+
+    * Common write: all processors must write the same value to the same
+      memory location if they are writing concurrently
+    * Arbitrary write: one CPU just *wins*
+    * Priority: use a fixed value, like CPU number to break write ties.
+
+  * Exclusive read/write -- no two processors can read/write the same
+    memory location at the same time.
+  * Concurrent read/Exclusive write (CREW PRAM) - if any one processor 
+    is writing to a memory location, no other processor can read or write
+    that location.
+
+Non-shared Memory
+-----------------
+* Each CPU with private memory
+* Communication network -> message passing
+  
+  * Bus based (broadcast, limited bandwidth, cheap)
+  * Crossbar switch (full bandwidth, expensive)
+  * multistage crossover
+  * completely connected
+  * star
+  * mesh
+    
+    * linear, 2-d mesh, 3-d mesh (weather), hypercube
+
+  * trees
+
+    * fat tree -- the higher up the tree, the more bandwidth is available
+      per node.
+
+Network of Workstations
+=======================
+
+This is the common *"parallel machine"* today.
+
+Connections
+-----------
+  * High speed switch (or more)
+  * High speed ether
+
+WWU Compute Cluster
+-------------------
+  * Network of custom built nodes
+  * 1 head node (12 Cores, 2 CPU)
+  * 8 compute nodes (12 Cores, 2 CPU)
+  * 2 GPU nodes (12 Core, 2 CPU, 3 GPU)
+  * 1 storage node (8 Cores, 2 CPU)
