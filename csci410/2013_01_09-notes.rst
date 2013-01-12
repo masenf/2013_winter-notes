@@ -1,3 +1,4 @@
+
 =========================
 CSCI 410 Notes 2013/01/09
 =========================
@@ -111,3 +112,4 @@ This mix is a tradeoff between running time and flexibility. Translated intermed
 programs only need to be translated once, and it will run on *any* architecture
 for which there exists a Virtual Machine which understands the language of the
 translator.
+

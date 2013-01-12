@@ -1,3 +1,4 @@
+
 ==========================
 CSCI 497a Notes 2013/01/10
 ==========================
@@ -92,3 +93,4 @@ Calculating the grid is O(1)
 
 So we'll do lg(n) calculations before determining the max diff, this balances 
 the computation time.
+

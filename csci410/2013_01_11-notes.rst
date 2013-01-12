@@ -1,3 +1,4 @@
+
 =========================
 CSCI 410 Notes 2013/01/11
 =========================
@@ -105,3 +106,4 @@ Typical token class/types for a programming language:
 * A single operator: LE(<=), EQ(==), ADD(+), NE(!=), etc
 * A single separator: LPAREN, RPAREN, SEMIC, COMMA
 * The group of all legal identifiers (variable names): IDENT
+

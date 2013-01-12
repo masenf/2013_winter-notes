@@ -1,6 +1,7 @@
-================
-Notes 2013/01/19
-================
+
+==========================
+CSCI 497a Notes 2013/01/09
+==========================
 
 Classes of Parallel computers
 =============================
@@ -80,3 +81,4 @@ WWU Compute Cluster
   * 8 compute nodes (12 Cores, 2 CPU)
   * 2 GPU nodes (12 Core, 2 CPU, 3 GPU)
   * 1 storage node (8 Cores, 2 CPU)
+

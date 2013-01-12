@@ -1,9 +1,10 @@
+
 =========================
 CSCI 345 Notes 2013/01/10
 =========================
 
 Polymorphism
-------------
+============
 
 * Behavior: set functions or procedures that operate on a data type
 * Modification and extension: no more switch statements on data type!
@@ -34,7 +35,7 @@ an fixed array of pointers for each behavior. This solves the problem
 of extensibility, duplication, and a souce of bugs.
 
 Problems building software
---------------------------
+==========================
 
 * Analysis: *What* is the code supposed to do? What am I trying to accomplish?
 * Design: *How* is the code to be written and organized? Implement common behaviors.
@@ -42,7 +43,7 @@ Problems building software
 * Test: separating behaviors allows for easier test cases
 
 Classic Object Orientation
---------------------------
+==========================
 
 First use of OO
 
@@ -60,5 +61,4 @@ Then in the 70s...
 * Behaviors: handlers, rendering, close, minimize, etc
 * Naturally hierarchical - click on window, passes to sub-object which 
   has a bounding box around the click location, sub-object handles event.
-
 
