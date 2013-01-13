@@ -13,7 +13,6 @@ Payroll example written out in Ada
     type Hourly_Rate_Type is ...;
     type Weekly_Rate_Type is ...;
     type Employee_Type is record
-    begin
         Pay_Type   : Payroll_Type;
         Name       : Name_String;
         Hourly_Pay : Hourly_Pay_Type;
@@ -36,7 +35,6 @@ Using a variant record
 .. code:: ada
 
     type Employee_Type (Pay_Type: Payroll_Type) is record
-    begin
         Name : Name_String;
         case Pay_Type is
             when Hourly =>
@@ -65,17 +63,14 @@ Using a tagged record
 .. code:: ada
     
     type Employee_Type is abstract tagged record
-    begin
         Name : Name_String;
     end record;
 
     type Hourly_Employee_Type is new Employee_Type with record
-    begin
         Hourly_Pay : Hourly_Pay_Type;
     end record;
 
     type Weekly_Employee_Type is new Employee_Type with record
-    begin
         Weekly_Pay : Weekly_Pay_Type;
     end record;
 
