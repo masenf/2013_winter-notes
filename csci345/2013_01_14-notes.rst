@@ -1,0 +1,127 @@
+
+=========================
+CSCI 345 Notes 2013/01/14
+=========================
+
+Payroll example continued
+=========================
+
+Using a tagged record
+---------------------
+
+.. code:: ada
+
+    procedure Compute_Pag_Check ( Emp : in Employee_Type;
+                                 Pay : out Paycheck_Type; );
+
+We want this to be a **primitive operation** for Employee_Type, which is a
+*tagged* record. A tagged record tells the compiler to includes the Type as a 
+field in the record, which we have explicity done in previous examples.
+
+The primitive operation on the base tagged record enabled **dispatching**:
+
+.. code:: ada
+
+   procedure Compute_Pay_Check ( Emp : in Hourly_Employee_Type;
+                                 Pay : out Paycheck_Type; );
+
+If a more specific version of a dispatched procedure is provided, as above,
+it will be called. If an extended tagged record doesn't provide a version
+of a primitive operation, the procedure applying to the base type will
+be called. Extended record types *inherit* primary operations from their 
+base type, and can *override* them. The compiler handles and *checks* this.
+
+Although we implemented this behavior with a switch statement,
+Ultimately this is implemented by the compiler as a *pointer chase*,
+because it is fast. This is a tradeoff between speed and flexibility:
+The Compute_Pay_Check function pointer must be located in the same
+offset in every type derived from Employee_Type.
+
+The types defined so far appear visually like this
+
++-------------------+
+| **Employee_Type** |
++-------------------+
+| Tag               |
++-------------------+
+| Name              |
++-------------------+
+
++--------------------------+
+| **Hourly_Employee_Type** |
++--------------------------+
+| Tag                      |
++--------------------------+
+| Name                     |
++--------------------------+
+| Hourly_Pay               |
++--------------------------+
+
+This structure is deliberate: *extented records can be used in place of the original
+type*
+
+Packages in Ada
+---------------
+
+Package spec files are similar to headers in C++, however in Ada the 
+compiler ensures that all compilation units are seeing the *same*
+definitions. In C++, this allows end developers to publicize private methods
+in black box code rather easily.
+
+A **primitive operation** is any procedure or function which has a parameter of the
+type or returns an value of the type which appears in a package spec after the type is defined 
+and before the type is *frozen*.
+
+A tagged type is *frozen* when the compiler builds the data structure for the type. 
+Usually this happens at the end of a package spec. This means that additional
+primitive operations can not be defined in the package body.
+
+The following actions will freeze a type:
+
+* End reading the package spec
+* Declare a variable of a tagged type
+* Declare a new derivation of a tagged type
+
+Therefore, it is important to declare all primitive operations on a type *before*
+deriving extended types. ( "..." is not a primitive operation, Some_Type was frozen... )
+
+*One can only declare primitive operations within a package specification.*
+
+.. code:: ada
+
+    package Employee_Pkg is
+        type Employee_Type is tagged private;
+
+        procedure Compute_Pay_Check ( Emp : Employee_Type;
+                                      Pay : Paycheck_Type );
+    private
+        type Employee_Type is tagged record
+            Name : Name_String;
+        end record;
+    end Employee_Pkg;
+
+This hides the implementation (and attributes) of Employee_Type from
+other compilation units.
+
+For a function or procedure to be *overriding*, the signature must be exactly 
+the same, **except** the tagged type name is replaced with the extended type name.
+
+Record Declarations
+-------------------
+
+.. code:: ada
+
+    type T is tagged record
+        ...
+    end record;
+
+    type T1 is new T with record
+        ... 
+    end record;
+
+    type T is tagged private;
+    type T1 is new T with private;
+
+    type T is tagged null record;
+    Type T1 is new T with null record;
+
