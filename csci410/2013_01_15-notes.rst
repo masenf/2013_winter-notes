@@ -1,0 +1,73 @@
+
+=========================
+CSCI 410 Notes 2013/01/15
+=========================
+
+Regular language
+================
+
+Regular expression
+------------------
+
+Syntax:
+
+* lambda
+* { }
+* a
+* if r and l are R.E.
+    
+    * r + l (alternation)
+    * rl    (concatenation)
+    * r*    (closure)
+    * (r)   (grouping)
+
+A regular language is a set of strings, a **regular expression** describes a
+regular language
+
+Examples
+--------
+
+::
+
+    S = {a,b}
+
+    r_1 = ( a + b )* a ( a + b )*
+    r_2 = ( a* b* )* a ( a* b* )*
+
+    These expressions are equivalent
+
+    Phone number
+
+    digits = { 1,2,3,4,5,6,7,8,9,0 }
+    S = digits U { '(',')','-' }
+
+    gr3 = digit digit digit
+    gr4 = gr3 digit
+    phone_number = "("gr3")-"gr3"-"gr4
+
+Define Token Class using Regular Expression
+===========================================
+
+**KEYWORD**: if + else + while + for + return + ...
+
+**INTEGER**: non-empty string of digits
+
+    *digit* = 0 + 1 + 2 + ... + 9
+
+    *integer* = (digit)(digit)*
+
+**IDENTIFIER**: string of letters or digits starting with a letter
+
+    *letter* = a + b + c + d + ... + z + A + B + C + D + ... + Z
+
+    *identifier* = (letter)(letter + digit)*
+
+**WHITESPACE**: non-empty sequence of space, newline, tab
+
+    *whitespace* = (' ' + \\n + \\t) (' ' + \\n + \\t)*
+
+Implementation
+==============
+
+Convert a regular expression to a non-deterministic finite automata
+to a deterministic finite automata (minimized)

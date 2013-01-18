@@ -1,0 +1,38 @@
+
+=========================
+CSCI 410 Notes 2013/01/14
+=========================
+
+ex:
+
+.. code:: c
+
+   doublef = sqrt(-1);
+
+In the lexical analysis phase, "doublef" will be tokenized as an identifier,
+no error will be thrown at this stage.
+
+Potential Errors in Lexing:
+
+    * String does not match any token in the language: invalid string
+    * Invalid character
+
+Writing a Lexical Analyzer
+==========================
+
+Define Token classes:
+    The choice of token classes depends on language and design of parser. Parser
+    design is an important factor to consider because the output of the Lexer is
+    the input to the Parser.
+
+Describe Patterns corresponding to Token classes:
+    Which strings belong to a given Token class. Typically implemented using regular
+    expressions.
+
+    Is whitespace significant? Is so, where? Beginning/End of line, in a line, more 
+    than one doesn't count?
+
+    How far ahead must the lexer look in order to know deterministically which class
+    a string belongs to? If a language (like Fortran or PL1) allows keywords to be used
+    as identifiers, the lexer may need to find the matching 'then' to know that the
+    'if' is a T_IF and not a T_IDENT.
