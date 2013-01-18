@@ -1,0 +1,38 @@
+
+=========================
+CSCI497a Notes 2013/01/16
+=========================
+
+Communication Operations (con't)
+================================
+
+**All to All personalized** -- unique messages: finding the transpose of a 
+matrix in parallel
+
+Look these up in the book...
+
+Ring: "take one, pass the rest"
+
+    If we have *n* processors, then we're sending *n-1* messages, and the
+    size of each message is *n-1*, *n-2*, ... *1*. This is O(n^2).
+
+Mesh: O(p sqrt(p))
+
+Hypercube: O(p lg(p))
+
+Crossbar: O(p)
+
+**All to All reduce**
+
+Crossbar::
+
+    R <- D[id]
+    for i = 1 to p-1
+            SEND D[(id+i) % p] to Processor (id+1) % p
+            RECV from (id+1) % p
+                R op Recv.Data
+
+At the end of the calculation, each processor, p has an R value that corresponds to
+the reduction of D[p] across all processors.
+
+The entire operation is O(p). Note that a standard All -> 1 reduction is O(p lg(p))

@@ -1,0 +1,62 @@
+
+=========================
+CSCI497a Notes 2013/01/18
+=========================
+
+More Operations
+===============
+
+* Scatter: one to all personalized
+* Gather: all to one personalized
+* Circular shift
+
+Analysis of a Parallel Algorithm
+================================
+
+* Sources of "overhead" - unnecessary slowdowns in a parallel algorithm. We're looking
+  to eliminate or reduce these
+
+  * lack of parallelism, all processors waiting on 1 task (idling)
+  * communication
+  * excess computation: in some cases this is acceptable (all-reduce)
+  * synchronization time
+  * poor algorithm
+
+* Measures
+
+  * Time -- sequential
+
+    * CPU
+    * Clock
+
+  * Time -- parallel
+
+    * Clock
+    * total CPU (sum over all processors)
+
+  * Overhead time
+
+    * T_o = p * T_p - T_s
+    * p = number of processors
+    * T_p = CPU time in parallel
+    * T_s = total CPU time in sequential
+    * T_o = 0 in perfectly parallelizable algorithms
+
+  * Speedup: S = T_s / T_p
+
+    * maximum S = p
+    * a Speedup greater than p is possible by taking advantage of caching behavior
+    * Example sum - n numbers, n processors
+     
+      * T_s = O(n)
+      * T_p = O(lg n)
+      * S = O(n / lg n)
+
+  * Cost and efficiency
+
+    * E = S / p
+    * gives a measure of the use of processors
+
+    * C = p * T_p (Computational 'cost')
+    * Cost-optimal: C and T_s have same growth rate
+

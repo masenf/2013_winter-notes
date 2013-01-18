@@ -1,0 +1,107 @@
+
+==========================
+CSCI 497a Notes 2012/01/15
+==========================
+
+Other issues
+============
+
+Array distribution schemes
+--------------------------
+
+How to distribute an array among processors?
+
+* Block distribution::
+
+    +----------------------+   +--+-------------------+   +----------+-----------+
+    |                      |   |  |                   |   |          |           |
+    +----------------------+   |  |                   |   |          |           |
+    |                      |   |  |                   |   +----------+           |
+    |                      |   |  |                   |   |                      |
+    |                      |   |  |                   |   |                      |
+    |                      |   |  |                   |   |                      |
+    +----------------------+   +--+-------------------+   +----------------------+
+
+  * Row-wise
+  * Column-wise
+  * Sub matrix
+
+    The separation which is most efficient depends on the data being decomposed and 
+    its dependencies
+
+* Cyclic Distribution
+
+    The idea is to loop through each array element assigning processors in a round
+    robin fashion
+
+* Block Cyclic distribution
+* Randomized block distribution
+* Graph partitioning: distributing an adjacency matrix
+* Hierarchical mappings
+* Dynamic Mappings
+
+  * Centralized (master/slave)
+  * Distributed schemes
+
+Reducing interaction overheads
+------------------------------
+
+* Maximize data locality
+* Minimize data exchange: sometimes it is better to distribute more data
+  rather than communicate more
+* Minimize hot spots and contention: evenly distributed workload
+* Data replication
+* Overlapping computation and interactions: message deliver vs. waiting for rendevouz
+
+Parallel Algorithm Models
+=========================
+
+Data-Parallel
+-------------
+
+Compute-Aggregate-Broadcast. Jacobi iterations are a great example of this:
+Neighbor computation, determining the max difference, broadcasting whether to continue
+
+Task Graph Model
+----------------
+
+Somewhat of a data flow model. Create a graph which the tasks pull work from.
+This is usually used for large tasks)
+
+Work pool model
+---------------
+
+Works well in a master/slave model, but can also be distributed
+
+Pipeline
+--------
+
+Producer consumer model
+
+Communication Operations
+========================
+
+Broadcast: 1 -> all
+
+* Crossbar: simple, fast broadcast
+* Linear: O(n)
+* Mesh network: O(n)
+* Fan out: Hypercube communication; works with just simple message passing
+
+    Can work plainly based on processor id.
+
+* Full tree
+
+Reduction: all -> 1 (a.k.a. aggregation)
+
+All to All Broadcast: Every node needs to know about every other node's computed
+data. Every node passes all the data that it has, until it gets all the data 
+that it needs. Also, ring structures can simply pass around in a circular fashion.
+
+    Can be done in Lg (n) rounds using the fan out method. Using this algorithm, the
+    packet size of messages is increasing with rounds.
+
+All to All personalized -- unique messages:
+
+    Each processor has a unique message to send to each other processor
+

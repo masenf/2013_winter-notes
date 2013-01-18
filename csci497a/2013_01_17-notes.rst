@@ -1,0 +1,74 @@
+
+=========================
+CSCI497a Notes 2013/01/17
+=========================
+
+Comm Ops (continued)
+====================
+
+The nature of reduce and broadcast algorithms typically results in
+idle processors before or after they have contributed their part.
+
+For all-reduce, it may be better to have each processor reduce to the
+same value, that way no processor has to broadcast at the end of the 
+reduction. Instead of each processor doing an all-to-1 reduce followed
+by a 1-to-all broadcast, the all-reduce is actually faster.
+
+Prefix Sums
+===========
+
+Given an array P of i elements referenced as V_i, the prefix sum is
+the series S of i elements where S_i = Sum(k=0 to i, V_i)::
+
+    V = 3  2  5  7  1  9  8
+    S = 3  5  10 17 18 27 35
+
+Hypercube
+---------
+
+Look up code in Nelson's slides. The code is defined as the program which
+will run on each processor. SPMD
+
+This is a minor tweak on all reduce, it is a conditional reduction which
+only propagates upward. Can be extended to use any commutative operation.
+
+CREW PRAM
+---------
+
+In this case, the code is defined as the instructions to run on all 
+processors. This definition is more like a SIMD.
+
+::
+
+    PrefixSum(array x, array s, int n)
+        Input:  x_1 .. x_n
+        Output: s_1 .. s_n
+
+        1) if n == 1, set s_1 <- x_1, exit
+        2) for each i, 1 <= i <= n/2 in parallel do
+                y_i <- x_(2i-1) + x_2i
+        3) PrefixSum( y, z, n/2 )
+        4) for each i, 1 <= i <= n in parallel do
+                i even: s_i <- z_(i/2)
+                i = 1: s_1 <- x_1
+                i odd: s_i <- z_((i-1)/2) + x_1
+
+
+    x =   1    2    3    4    5    6    7    8
+
+    y =   3    7   11   15
+
+    z =   3   10   21   36
+
+    s =   1    3    6   10   15   21   28   36
+
+Using n processors (we calculate in O(1))
+
+    2) n/2 processors
+    3) n/2 processors
+    4) n processors
+
+T(n) = O(1) + T(n/2)
+
+    ==> O(lg n)
+
