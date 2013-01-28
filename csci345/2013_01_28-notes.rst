@@ -1,0 +1,52 @@
+
+=========================
+CSCI 345 Notes 2013/01/28
+=========================
+
+Inheritence
+===========
+
+a.k.a. "IS-A"
+
+Polymorphism
+============
+
+Overriding: using *some* different operations for sub classes. These
+methods are called *implicitly* by using the same name to define a 
+method in the subclass. 
+
+Ada now explicitly provides an 'overriding' keyword to make this behavior
+more transparent and documented.
+
+Java also uses @Override to annotate methods which override the super class
+method by the same name.
+
+Composition
+===========
+
+a.k.a. "HAS-A" or "contains"
+
+ex: a **Rope** HAS A **Rope_Impl**, the Rope object contains a reference to
+a Rope_Impl object which it defers most of the work to.
+
+Composition is the act of assembling a super object from parts:
+
+* Car
+
+  * Engine
+  * Wheel (x4)
+  * Body
+
+Creating this sort of relationship using inheritence would be inconvenient because 
+of the enormous type hierarchy that would be required to customize all of the various options.
+
+This also creates the phenomenon of *parallel hierarchies* in which different roots of
+the hierarchy have duplicated behvaior. For instance, if two cars have a V6 motor,
+but different bodies, then the motor code must be copied; likewise if they have the
+same body but different motors, then the body code must be copied. *Anytime you're 
+copying code, it's a red flag*. In addition, this doesn't allow for "hot-swapping"
+of components.
+
+A downside of this technique is that if requires a lot of *forwarding* of calls
+from the parent object to the contained objects.
+

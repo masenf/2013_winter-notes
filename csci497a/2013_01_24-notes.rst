@@ -1,0 +1,116 @@
+
+==========================
+CSCI 497a Notes 2013/01/24
+==========================
+
+Message Passing Programming
+===========================
+* A message passing interface is an abstraction on top of real hardware
+* Paradigm:
+
+  * p processes with their own process space
+  * communication via messages
+
+* Works well on clusters, processes can run on different cores and as 
+  long as a message passing interface exists, we don't really care where
+  the work happens
+
+  * Requires explicit data partitioning
+  * Requires explicit parallel programming
+
+* Message passing programs
+
+  * Common: asynchronous - using callbacks, interrupts, signals
+  * loosely synchronous - broadcast, reduce; faking sync behavior
+  * SPMD is the most common architecture used. 
+  * MPMD is sometimes used, separate different tasks to different programs
+
+* Typical environment
+
+  * Separate machine, no shared filesystem
+  * nfs (or luster) file system, separate OS
+  * Same filesystem and OS running on the network
+  
+Message passing basics
+======================
+
+::
+    
+    send (void *sendbuf, int nelems, int dest)
+    receive (void *rebuf, int nelemes, int *source)
+
+Questions
+---------
+
+* Blocking recieve? Sometimes the program simply has to wait for more data. This can
+  be useful in some applications.
+* Blocking send? Mainly used in highly synchronous environments. Rendevouz
+* Data transmission issues::
+    
+    a = 100;
+    send(&a, 1, 1);
+    a = 0;
+
+  * What gets sent? Implementation dependent: if send copies the buffer, then it
+    sends 100, if send stores the address, then it *may* send 0.
+
+Sending mechanisms
+------------------
+
+* non buffered (blocking)
+  
+  * request to send.......ok to send
+  * deadlocks? If two nodes are trying to use a blocking send to each other, 
+    then neither one is willing to receive, so both nodes are waiting on the other
+
+* buffered (blocking or non-blocking)
+
+  * deadlocks? If nodes are all waiting to receive, then no nodes will send the data
+    needed
+  * bounded buffer problems: once the buffer space is depleted, send starts blocking.
+    This is standard OS behavior.
+
+* Other issues
+
+  * store and forward - needed for a mesh, crossbar switch frees us from this issue
+  * data types - structured messages or raw bytes
+
+Message Passing Interface (MPI)
+===============================
+
+* A standard interface for message passing
+* Used for Fortran, C, C++ (and others)
+* There are various implementations of the MPI standard produced by vendors, independent parties
+
+  * We'll be using mpi-ch_ or openmpi_
+
+* supports blocking, non-blocking, peeking
+* does not expose connection structure directly
+
+  * Allows one to build virtual connection structures: grids, subgroups, etc
+  * Can change processor ids to match the virtual structure
+
+6 Basic Routines
+================
+
+::
+
+    int MPI_Init(int *argc, char ***argv)
+    int MPI_Finalize()
+        returns MPI_SUCCESS
+
+Concept of the *communication domain*
+  * default is all processors
+  * can make subsets
+  * MPI_Comm_size
+  * MPI_Comm_s
+
+::
+
+    int MPI_Comm_size
+
+    mpicc -Wall -g hello.c
+    mpirun -np 4 -hostfile ./hostfile a.out
+
+.. _mpi-ch:     http://www.unix.mcs.anl.gov/mpi/mpich
+.. _openmpi:    http://www.open-mpi.org

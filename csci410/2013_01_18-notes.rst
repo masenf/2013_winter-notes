@@ -1,0 +1,32 @@
+
+=========================
+CSCI 410 Notes 2013/01/18
+=========================
+
+Regular Expression Symbols
+
+======          =======
+Sym             Meaning
+======          =======
+ ^              Beginning of line or negated character class
+ $              End of line
+ .              Any input character
+{m,n}           Between m and n occurences of previous regular expression  
+======          =======
+
+Ambiguity in Lexing
+===================
+
+* Rule: pick the longest string in L(R)
+
+  * "Maximal munch", "longest match"
+
+* Rule: order precedence - token classes listed first will be matched first
+*
+
+Error Handling
+==============
+
+What if no rule matches a prefix of the input?
+
+Solution: create the final rule which matches all "bad" strings and throws an error

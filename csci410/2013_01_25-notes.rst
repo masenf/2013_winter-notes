@@ -1,0 +1,40 @@
+
+=========================
+CSCI 410 Notes 2013/01/25
+=========================
+
+Parsing
+=======
+
+There are two main types of parser:
+
+  * Top-down: start with the Start symbol of the grammer and try to expand non-terminals
+    to derive the input string
+  * Bottom-up: start with the input string and try to reduce terminal symbols to
+    non-terminals until you're left with the start string.
+
+Top-down
+--------
+
+Relies on backtracking to correct bad expansion decisions
+
+*Predictive Top-Down Parsing* is a technique for looking ahead at the next 
+character to expand the proper non-terminal in a deterministic way.
+
+LL(1), left-most, look-ahead 1 char:
+  
+  * Cannot be left-recursive, all terminal symbols in a production must appear before
+    non-terminals
+  * Must be left-factored
+
+Ex::
+
+    Left-recursive grammar (NOT LL(1))
+
+        S   ->      Sa | b
+
+    Convert to left-factored grammar
+
+        S   ->      bT
+        T   ->      aT | ^
+

@@ -1,0 +1,24 @@
+
+==========================
+CSCI 497a Notes 2013/01/23
+==========================
+
+Snyders type architecture
+=========================
+
+* P processors with local memory
+* fixed number of edges
+* communication net (Fixed Degree graph!)
+* global controller
+
+Hypercube? No, edges not fixed.
+
+Network of Workstations? Yes, fairly closely.
+
+An algorithm written for Snyders type architecture can run on *any* parallel machine
+that exists.
+
+The important takeaway is that the medium is the message. Starting with the wrong
+architecture in mind, produces sub par code. Parallel code doesn't give that much
+of a speedup normally, so not optimizing for *the* parallel architecture is a
+major source of overhead.

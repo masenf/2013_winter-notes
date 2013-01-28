@@ -1,0 +1,71 @@
+
+=========================
+CSCI 345 Notes 2013/01/18
+=========================
+
+Abstract type
+=============
+
+An abstract type cannot be instantiated. It serves as a template to be extended by
+subclasses
+
+.. code:: ada
+
+    type T is abstract tagged record
+        ...
+    end record;
+
+Abstract types can declare and define primitive operations for the type which can
+be inherited and overridden from subclasses (default for class). 
+
+However, **abstract operations** can be defined which *must* be overridden 
+by extended subclasses. (require child implementation). Abstract operations are
+useful for dispatching where the parent class needs to ensure that an operation
+exists on all subclasses, but doesn't have a default implementation itself.
+
+.. code:: ada
+
+    procedure P (x : T) is abstract;
+
+    type T1 is new T with null record;
+    procedure P (x : T1) is
+    begin
+        -- provide implementation for P
+        ...
+    end P;
+
+Sometimes it may be useful to add an operation in the parent class such as
+hasOperation() which returns False. Subclasses implementing Operation would
+do well to override hasOperation() to return True.
+
+Ada.Finalization
+================
+
+.. code:: ada
+
+    type Controlled is tagged <<implementation_defined>>;
+
+    procedure Initialize (in out c : Controlled);    -- these operations default
+    procedure Adjust     (in out c : Controlled);    -- to NO-OP
+    procedure Finalize   (in out c : Controlled);
+
+    type T is new Ada.Finalization.Controlled with record
+        ...
+    end record;
+
+    A,B : T;
+
+    ...
+
+    -- what happens here? direct attribute (shallow) copy?
+    A := B;     -- solution: perform a deep copy:
+
+    -- these steps get performed on A because it is a Controlled'Class
+        Initialize(Temp)
+        Temp := B;
+        Adjust(Temp);
+        Finalize(A);
+        A := Temp;
+        Adjust(A);
+        Finalize(Temp);
+

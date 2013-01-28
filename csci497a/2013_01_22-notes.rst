@@ -1,0 +1,94 @@
+
+=========================
+CSCI497a Notes 2013/01/19
+=========================
+
+Mapping algorithm to machine
+============================
+
+In practice n!=p
+
+* choose less processors
+* choose less data
+* n/p items per processor?
+* simulate n processes vs. changing algorithm
+* adding n numbers on p processors
+  
+  * n on n: time T(log n)
+  * n on p: (mapping wrap) time T((n/p) log p)
+  * n on p: (mapping block) time T(n/p + log p)
+
+    * can be cost efficient if you choose the right number of processors: n = p * log p::
+
+    n = p log p
+    T_s = n == p log p
+    T_p = T(n/p + log p) == T(log p + log p)
+    S = T_s / T_p == p log p / log p == p
+    C = p log p == n
+
+Terms
+=====
+
+* Course grain, fine grain: where does the parallelism occur?
+
+  * Course grain implies large data sets, lots of memory (like our cluster)
+
+* Scalability: how does it work on a variety of n and p
+
+  * Speedup vs. number of processing elements
+    
+    * for various problem sized
+    * "results"
+
+      * increase p, efficiency goes down
+      * decrease p, efficiency goes up
+
+  * Problem size
+
+    * Sequential basic computation steps
+
+      * e.g. matrix multiply is O(n^3), you need a very large n before the **best**
+        algorithms generate a modest speedup.
+
+    * Book denotes problem size as W (work) 
+
+      * W == T_s (best known serial algorithms)
+
+Type Architectures, Shared Memory and the Corollary of Modest Potential
+=======================================================================
+
+A parallel solution utilizing p processors can improve the best sequential 
+solution by at most a factor of p.
+
+Typical problems that can use parallelism are *compute bound*:
+ 
+  * typically polynomial in time: often O(n^4)
+  * real time bound - *time budget*. Parallelism allows larger problems to be solved
+    in the same time. m = factor of problem size increase
+  * T_s = (cn) ^ x
+  * T_p = ( c (nm) ^ x ) / p (Best possible speedup)
+  * m = p ^ (1/x) or p = m^x
+  * ex: x = 4, m=100 => p = 100,000,000
+  * ex: x = 4, p=64 => m = 2.828
+  * ex: x = 4, p=300,000 => m = 23.4
+
+Corollary of modest potential: "Parallelism doesn't buy us much...don't waste it!"
+
+Language: Medium is message
+===========================
+
+Sequential languages yield sequential solutions:
+
+* It is hard to get parallelism out of sequential code
+
+Language mapping?
+
+* Most languages map well to sequential machines
+* parallel: Model?
+
+  * PRAM: shared memory, constant time access to memory
+  * Other?: P processors, fixed number of edges, communication net 
+
+    * Wasn't well established when this paper was authored (80s), but has now
+      taken hold of how we consider parallel machines.
+

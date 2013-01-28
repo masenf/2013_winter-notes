@@ -1,0 +1,37 @@
+
+=========================
+CSCI 345 Notes 2013/01/24
+=========================
+
+What is an object?
+==================
+
+An object is a black box composed of:
+
+  * Data (Referred to as *Attributes*)
+  * Behavior (Referred to as *methods*, *operations*, or *messages accepted*)
+
+What is a class?
+================
+
+A class is a specification (blueprint) which defines a type of object.
+
+The class definition describes the attributes and methods which compose a type of object.
+
+Reedy likes the cookie-cutter analogy: 
+
+    A class is like a cookie-cutter. An object is like a cookie.
+
+In Java, reflection is available: getClass() returns the class of the
+object that it's called on as an object itself.
+
+Encapsulation and data hiding
+=============================
+
+Good practice: **All attributes are private**
+
+This prevents other code from directly probing or modifying the internal data.
+Callers can only manipulate the data via method calls on the object: 
+"getters" and "setters".
+
+

@@ -1,0 +1,45 @@
+
+=========================
+CSCI 410 Notes 2013/01/22
+=========================
+
+Syntactic analysis (Parsing)
+============================
+
+Creates an abstract syntax tree from a stream of Token Classes using a 
+context free grammar.
+
+A grammar consists of
+---------------------
+
+  * a set of terminals (lower case generally)
+  * a set of non-terminals (upper case generally)
+  * starting symbol (S)
+  * a set of productions ( rules )
+
+Example::
+    
+    ^ = lambda (empty token)
+
+    BLOCK       =>  STMT | { STMTS }
+    STMTS       =>  ^ | STMT STMTS
+    STMT        =>  EXPR; | 
+                    if (EXPR) BLOCK |
+                    while (EXPR) BLOCK |
+                    do BLOCK while (EXPR)
+    EXPR        =>  identifier | constant |
+                    EXPR OP EXPR
+    OP          =>  + | - | * | /
+
+Derivations
+-----------
+
+Each derivation step applies a production from the grammar to the string being parsed.
+The set of derivation steps which matches an input string is the key to 
+determining the parse tree.
+
+    * right-most derivation sequence: always derives from the furthest non-terminal on the right.
+    * left-most derivation sequence: always derives from the furthest non-terminal on the left.
+
+*Ambiguity* arises when different derivation sequences are possible from the same grammar
+and the same input tokens
