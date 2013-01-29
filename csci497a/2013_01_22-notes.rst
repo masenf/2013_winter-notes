@@ -20,11 +20,11 @@ In practice n!=p
 
     * can be cost efficient if you choose the right number of processors: n = p * log p::
 
-    n = p log p
-    T_s = n == p log p
-    T_p = T(n/p + log p) == T(log p + log p)
-    S = T_s / T_p == p log p / log p == p
-    C = p log p == n
+        n = p log p
+        T_s = n == p log p
+        T_p = T(n/p + log p) == T(log p + log p)
+        S = T_s / T_p == p log p / log p == p
+        C = p log p == n
 
 Terms
 =====
