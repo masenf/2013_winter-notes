@@ -1,0 +1,71 @@
+
+=========================
+CSCI 410 Notes 2013/01/28
+=========================
+
+Parser (continued)
+==================
+
+Top-down
+--------
+
+**Constructing a parse table from a grammar**
+
+::
+
+    T   ->  FT'
+    T'  ->  ^
+    T'  ->  *FT'
+    F   ->  id
+    F   ->  (T)
+
+The table consists of terminals across the row dimension and non-terminals
+down the column.
+
++--+--------+-------+------+--------+-------+
+|  |    *   |   (   |   )  |   id   |   $   |    
++--+--------+-------+------+--------+-------+
+|T |    ~   | F->FT'|   ~  |  T->FT'|   ~   |
++--+--------+-------+------+--------+-------+
+|T'| T'->FT'|   ~   | T'->^|    ~   | T'->^ |
++--+--------+-------+------+--------+-------+
+|F |   ~    | F->(T)|   ~  |  F->id |   ~   |
++--+--------+-------+------+--------+-------+
+
+
+2 sets, the *first* and the *follow*.
+
+  * a *exists* in FIRST(A) if A -> aB   *(where B is in sentential form)*
+
+    * FIRST(T) = { id, ( }
+    * FIRST(T') = { ^, * }
+    * FIRST(F) = { (, id }
+
+  * a *exists* in FOLLOW(A) if S -> cAaB 
+  * a *exists* in FOLLOW(A) if S -> cAraB and r -> ^
+
+    * in particular, $ is in FOLLOW(S)
+    * FOLLOW(T) = { $, ) }
+    * FOLLOW(T') = { $, ) }
+    * FOLLOW(F) = { $, ), * }
+
+* For each production rule A -> c
+  
+  * For each a in FIRST(c) add A -> c to M[A,a]
+  * if ^ in FIRST(c), add A -> c to M[A,b] for each b in FOLLOW(A)
+  * if ^ in FIRST(c), add A -> c to M[A,$] if $ in FOLLOW(c)
+  * all undefined entries are error
+
+It only makes sense to calculate the follow set if the grammar contains lambda 
+production rules.
+
+Error recovery
+--------------
+
+* Panic recovery: when an error is encountered, continue scanning tokens until
+a *synchronizing token* is found, then continue. This will depend upon the
+compiler writer to choose, usually this will simply drop compilation units which
+contain errors which allowing the rest to build.
+* Adaptive recovery: replacing commas with semicolons in a place where one 
+would expect a semicolon. Display a message about it
+
