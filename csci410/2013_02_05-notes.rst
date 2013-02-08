@@ -1,0 +1,85 @@
+
+=========================
+CSCI 410 Notes 2013/02/05
+=========================
+
+:: 
+
+    S'  -> T
+    T   -> F | T*F | C(T)
+    F   -> id | id++ | (T)
+    C   -> id
+
+    State0:
+        S'  -> .T
+        T   -> .F
+        T   -> .T*F
+        F   -> .id
+        F   -> .id++
+        F   -> .(T)
+        C   -> .id
+
+    State1: (0 -- id --> 1)
+        F   -> id.
+        F   -> id.++
+        C   -> id.
+
+The first and third item in State1 are conflicting. We need to resolve a
+*reduce-reduce* conflict.
+
+Further, item two conflicts with first and third, because the dot is
+at the end, the parser could shift or it could reduce. We must look
+ahead to the (++) token in order to decide. This is a *reduce-shift*
+conflict.
+
+Follow(F) = { * ) $ }
+Follow(C) = { ( }
+
+if next token is '(', we would reduce using the third item of state1
+because '(' is in the follow set of C. Because the follow sets in
+this case are disjoint, we can make a deterministic resolution.
+
+Action[1,*] = Action[1,)] = Action[1,$] = reduce(F->id)
+Action[1,(] = reduce(C->id)
+Action[1,++] = shift
+
+This is a Simple LR(1) - SLR(1), which is deterministic with one lookahead
+character
+
+Canonical LR(1)
+===============
+
+:: 
+
+    S'  -> S
+    S   -> L=R | R
+    L   -> * R | id
+    R   -> L
+
+    State0:
+        S'  -> .S
+        S   -> .L=R
+        S   -> .R
+        L   -> .*R
+        L   -> .id
+        R   -> .L
+
+    State2: (0 -- L --> 2)
+        S   -> L.=R
+        R   -> L.
+
+    Follow(R) = { = $ }
+
+In state2 if the next token is '=', we have a *shift-reduce* conflict because
+'=' is after the dot in item 1, and '=' is also in Follow(R).
+
+LR(1) closure (item set)
+------------------------
+
+if [A -> g.BQ, a] is in item set, then [B -> .h, b] is in the set if
+    b exists in First(Qa)
+
+Typically LR(1) grammars are considered impractical to implement due to the
+large number of states required. We can usually simplify LR(1) grammars
+into LALR(1) grammars, which are the most popular.
+

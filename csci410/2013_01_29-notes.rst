@@ -1,0 +1,55 @@
+
+=========================
+CSCI 410 Notes 2013/01/29
+=========================
+
+Bottom-Up parsing
+=================
+
+Shift-reduce parser
+
+Goal: *perform a series of actions to consume all input symbols*
+
+Example derivation:
+
+Grammar::
+
+    S   ->  aSB | d
+    B   ->  b
+
+
+=====           ======          =======
+Stack           Input           Action
+=====           ======          =======
+$               aadbb$          shift
+$a              adbb$           shift
+$aa             dbb$            shift
+$aad            bb$             reduce
+$aaS            bb$             shift
+$aaSb           b$              reduce
+$aaSB           b$              reduce
+$aS             b$              shift
+$aSb            $               reduce
+$aSB            $               reduce
+$S              $               success
+=====           ======          =======
+
+Actions
+-------
+
+  * shift: push left input symbol to stack
+  * reduce: replace terminal(s) at the top of the stack with a matching non-terminal
+
+Handle
+------
+
+Helps the parser decide *when* to do *what*
+
+Ex: S => aSB => aSb => aaSBb => aaSbb => aadbb
+
+In this case, (S -> aSB, 4) is a *handle* of "aaSBb". The four refers to 
+the index of the rightmost non-terminal symbol (B).
+
+A handle of a sentential form W is a pair: (A -> y, p) where W = xyz, len(p) = len(x+y),
+z is a string of terminals. xAz -> xyz = W.
+

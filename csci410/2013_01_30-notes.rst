@@ -1,0 +1,59 @@
+
+=========================
+CSCI 410 Notes 2013/01/30
+=========================
+
+Bottom-up (continued)
+=====================
+
+Generating handles example
+--------------------------
+
+===============         ===================     =========    ====    =======
+W                       handle                  x            y       z
+===============         ===================     =========    ====    =======
+aSB                     (S -> aSB, 3)           ^            aSB     ^
+aSb                     (B -> b, 3)             aS           b       ^
+d                       (S -> d, 1)             ^            d       ^
+a^(n+1)Sb^(n+1)         (B -> b, n+3)           a^(n+1)S     b       b^n
+a^(n+1)db^(n+1)         (S -> d, n+2)           a^(n+1)S     d       b^(n+1)
+a^(n+1)SBb^n            (B -> b, n+3)           a^(n+1)SB    b       b^(n-1)
+===============         ===================     =========    ====    =======
+
+Look for rightmost non-terminals 
+
+LR(K) grammar
+-------------
+
+A grammar is LR(K) is every string in the language has a unique rightmost
+derivation ('R') which can be constructed in reverse order, where the 
+handle of each sentential form is found by scanning the form's symbols from
+left-to-right ('L') including up to K symbols past the handle ('K')
+
+Our example is a LR(0) grammar because it requires no lookahead beyond the handle.
+
+LR(1) Grammar example
+---------------------
+
+::
+
+    S   -> aCd | bCD
+    C   -> cC | c
+    D   -> d
+
+Is this LR(1)?
+
+* Determine sentential forms and handles
+
+==========      ===============     =====       =====           ====        =========
+W               handle              x           y               z           lookahead
+==========      ===============     =====       =====           ====        =========
+aCd             (S -> aCd, 3)       ^           aCd             ^           0
+ac^(n+1)Cd      (C -> cC, n+3)      ac^n        cC              d           0
+ac^(n+1)d       (C -> c, n+2)       ac^n        c               d           1 
+bCD             (S -> bCD, 3)       ^           bCD             ^           0
+bCd             (D -> d, 3)         bC          d               ^           0
+bc^(n+1)Cd      (C -> cC, n+2)      bc^n        cC              d           0
+bc^(n+1)d       (C -> cC, n+2)      bc^n        c               d           1
+==========      ===============     =====       =====           ====        =========
+
