@@ -1,0 +1,77 @@
+
+=========================
+CSCI 345 Notes 2013/02/07
+=========================
+
+Class Design
+============
+
+1. Model the real world
+
+  * Behavior
+  * Responsibilities
+
+  Breaking up classes along responsibilities increases modularity at the 
+  cost of complexity
+
+2. Identify public interface
+
+  * *Minimum* public interface: adding hypthesized methods to a class is not
+    advised. Keep things small to start.
+
+3. Private implementation
+
+Constructors
+------------
+
+Part of the public interface is the method for creating a new instance,
+the *constructor*.
+
+An actual constructor:
+
+.. code:: java
+    
+    Employee e = new Employee("Joe")
+
+Factory Function:
+
+.. code:: java
+
+   Employee e = MakeEmployee("Joe")
+
+MakeEmployee is just some function which creates and returns an Employee
+object. Using a factory function allows one to return a subclass based
+on the arguments as opposed to the named class. This is not possible
+with an actual constructor.
+
+*Constructor returns an object that is in a safe, stable state*
+
+Chaining Constructors
+---------------------
+
+An extended class should call the constructor for its parent class within
+its own constructor. This call should be the first step in a child constructor
+because it may cascade many levels up the class hierarchy. If called first,
+it ensures that all superclass initialization occurs first.
+
+.. code:: java
+
+   Hourly_Employee(String name, float pay) {
+       super(name);
+       ...
+   }
+
+The ``super`` is a reference to the parent, calling it as a function
+invokes the constructor of the super class. This should be the first
+line of the constructor. The compiler will enforce this if there is
+no default constructor on the super class.
+
+Destructors
+-----------
+
+Present in C++, but not Java. Required for environments with manual 
+memory management. Since Java is garbage collected, it's not an issue.
+
+Java does however contain a *finalizer* which gets invoked once an object
+becomes garbage.
+

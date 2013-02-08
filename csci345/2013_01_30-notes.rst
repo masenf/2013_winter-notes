@@ -1,0 +1,19 @@
+
+=========================
+CSCI 345 Notes 2013/01/30
+=========================
+
+Object Oriented Thought Process
+
+1. Interface implementation
+2. Class design
+
+  * Design interface
+  * Design/build implementation
+
+3. Abstract thinking
+
+  * Define the properties of how an object should behave
+  * If these properties are general, more specific implementations can be built
+    upon it.
+
