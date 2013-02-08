@@ -102,12 +102,13 @@ Message Passing Interface (MPI)
 Concept of the *communication domain*
   * default is all processors
   * can make subsets
-  * MPI_Comm_size
-  * MPI_Comm_s
+  * MPI_Comm identifiers
+  * MPI_COMM_WORLD
 
 ::
 
-    int MPI_Comm_size
+    int MPI_Comm_size (MPI_Comm comm, int * size)
+    int MPI_Comm_rank (MPI_Comm comm, int * rank)
 
     mpicc -Wall -g hello.c
     mpirun -np 4 -hostfile ./hostfile a.out

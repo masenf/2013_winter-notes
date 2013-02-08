@@ -1,0 +1,25 @@
+
+==========================
+CSCI 497a Notes 2013/01/30
+==========================
+
+Algorithms: Dense Matrix
+========================
+
+Most of the time implemented as an O(n^3) algorithm. There have been 
+algorithms which are asymptotically faster, however the constant term 
+is large, making them useful on large martricies.
+
+Partitioning Methods
+--------------------
+
+* Striped: single row or column to one PE
+
+    * Block: contiguous rows or columns
+    * Cyclic
+
+* Checkerboard:
+
+    * Block: rectangular sub-matrix
+    * Cyclic
+

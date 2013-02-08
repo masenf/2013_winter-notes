@@ -1,0 +1,59 @@
+
+==========================
+CSCI 497a Notes 2013/02/06
+==========================
+
+More MPI stuff
+==============
+
+Groups and Communicators
+------------------------
+
+* MPI_Comm_split ( comm, groupid, order, * new comm )
+* MPI_Comm_sub ( comm, keep_dims[], * subcomm)
+  create a subgroup. Keep is an array with length
+  equal to the number of dimensions of the Comm group. If keep[i] == 1
+  then dimension i will provide the new subcomm ranking.
+
+  Ex: if keep = {0, 1}, then after the call to sub, there would be
+  a subcomm for each row (since the column dimension is kept)
+
+Debugging
+---------
+
+* printf(3)s
+* gdb with attach command and infinite loops
+  
+  * int proceed = 0; while(!proceed)
+
+* attach to process and "set var proceed=1"
+
+Parallel Sorting
+================
+
+Odd-Even sort
+-------------
+
+  * Exchange data between pairs of machines
+  * The higher rank processor keeps the larger data, the lower rank processor
+    keeps the smaller data.
+  * Repeat alternating between starting at n=0 and n=1
+  * This is similar to *bubble sort*, except in the parallel world
+
+Merge sort
+----------
+
+  * Merge step is too sequential
+
+Quicksort
+---------
+
+* First try
+  
+  * Do both sub sorts in parallel
+  * Pivot requires O(n)
+  * log n rounds
+  * n processors
+  * Cost ==> O(n^2 log n) Not Optimal
+
+
