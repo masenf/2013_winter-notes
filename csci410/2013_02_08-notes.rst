@@ -1,0 +1,39 @@
+
+=========================
+CSCI 410 Notes 2013/02/08
+=========================
+
+Midterm Review
+==============
+
+Next monday:
+
+Lexical analysis and flex
+-------------------------
+
+* Regular expressions
+* How does Flex resolve ambiguity in patterns
+
+  * Maximum munch
+  * First pattern declared in the rules
+
+Context-free grammars and deterministic Parsing
+-----------------------------------------------
+
+* Determine if a grammar is ambiguous or not: yes if an output string can
+  be generated in more than one way
+* Determine if a grammar is LL(1) from First and Follow sets.
+
+  * If the First and Follow sets are disjoint, the grammar is LL(1)
+
+* Empty string will never occur is Follow set
+* $ always occurs in Follow(S)
+* Calculating the follow set only makes sense for grammar rules which can
+  derive the empty string.
+
+* Must be able to build item set for LR(0)
+* Must be able to identify type of conflict.
+
+* What is an LR(1) grammar? Uses the item set, but each item also provides
+  a *context* which is the follow set of the Non-terminal.
+
