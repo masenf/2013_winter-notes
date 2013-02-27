@@ -1,0 +1,86 @@
+
+==========================
+CSCI 497a Notes 2013/02/12
+==========================
+
+Graphics Processing Units
+=========================
+
+GPU is not general purpose hardware, it is limited to certain types of
+computations.
+
+*CUDA* is nVidia's GPU programming system
+
+*OpenCL* is another system, however it is less mature than CUDA
+
+GPU Architecture
+================
+
+* a GPU consists of a set of streaming multiprocessors (*SMs*)
+* each *SM* consists of a set of streaming processors (*SPs*)
+* each *SM* is a SIMD (SIMT) machine
+
+* all cores in an SM process the same instruction using different
+  data from the register file.
+* each core in an SM runs a thread; the threads run in lock step
+* threads in different SMs cannot synchronize.
+* word size is 32 bits.
+
+* a group of threads is called a block
+* hardware divides a block into *warps* of 32 threads each
+* threads in a warp run the code in lock step
+* only half the warp runs at any given time
+* a thread either executes or does nothing
+  
+  * if/then/else causes waiting of all threads. First the condition
+    is evaluated by all threads. For true threads, the then is executed
+    while the false threads wait. Then the false threads execute the 
+    else clause.
+
+* Warps are managed in hardware
+
+  * warps are run in a timesharing fashion
+  * fixed time slices are given to warps
+  * if a warp needs to access global memory, it gets unscheduled
+  * hardware context switches are *very fast*
+
+Memory Structure
+================
+
+* Shared memory (Register file, 32K)
+
+  * Memory is very fast to access
+  * Host system has no access to GPU shared memory
+  * Used for communication between threads in the same warp
+
+* Global Memory
+
+  * Shared by all threads in the GPU
+  * Persistent across 'code runs'
+  * Host system can control global memory (copy in / copy out)
+  * Access from a thread is *slow*, but bandwidth is *high*
+
+    * Startup latency to get the transaction up and going
+    * Streaming processor -> Pipelining
+
+* Register
+
+* Local Memory: part of Global, but for a specific thread
+
+  * Automatic (stack) variables 
+  * Register spills (expensive operation)
+
+* Constant memory: readonly from device (64K)
+
+  * Host has read/write access
+
+* Texture memory: similar to constant, however caching is 2D
+
+Threads Hierarchy
+=================
+
+* Grid
+
+  * One or more Blocks (addressed x,y)
+
+    * multiple threads in a block (addressed z)

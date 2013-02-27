@@ -1,0 +1,14 @@
+
+==========================
+CSCI 497a Notes 2013/02/19
+==========================
+
+*How* memory is accessed has a bigger effect on running time in GPU programming.
+
+A single SM accessing sequential blocks of global memory takes a performance hit,
+therefore row sums tend to be slower than column sums.
+
+Reducing in SIMD machines
+=========================
+
+

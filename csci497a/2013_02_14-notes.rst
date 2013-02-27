@@ -1,0 +1,20 @@
+
+==========================
+CSCI 497a Notes 2013/02/14
+==========================
+
+More on blocks
+==============
+
+Upon kernel call, all threads are started at once
+
+The total number of threads in a block is limited to the number of threads
+available on an SM (hardware dependent).
+
+A single block cannot span SMs, but an SM may host several blocks
+
+Blocks can be of arbitrary size, but it's beneficial if they are as large
+or larger than the *warp* size. Blocks are split into warps, warps take
+turns running, so if block size is 1, then only one thread runs at a time.
+
+

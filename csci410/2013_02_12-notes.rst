@@ -1,0 +1,10 @@
+
+=========================
+CSCI 410 Notes 2013/02/12
+=========================
+
+Semantic Analysis
+=================
+
+  * Symbol table
+  * Perform type checking

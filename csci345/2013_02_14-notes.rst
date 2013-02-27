@@ -1,0 +1,25 @@
+
+=========================
+CSCI 345 Notes 2013/02/14
+=========================
+
+* Open/Close principle
+
+  * Classes should be *open* for extension and *closed* for modification
+  * If new functionality is needed, a new class should be created
+  * Two options:
+
+    * New class extends existing class
+    * Existing class implements published interface, create new interface (may be extended),
+      new class implements both the new and published interfaces
+
+  * The goal is to avoid breaking existing functionality while maintaining the
+    flexibility to improve and extend the program
+
+    Side note: Think of an interface at a *pure abstract class*: an abstract class with only
+    abstract methods.
+
+* Class should be responsible for itself
+* Keep scope as small as possible
+* Keep coupling low: this helps to isolate changes and avoid recompilation
+* Provide standard operations

@@ -1,0 +1,137 @@
+
+==========================
+CSCI 497a Notes 2013/02/22
+==========================
+
+Assignmnet 4
+============
+
+*Due Tuesday, March 5*
+
+Jacobi iteration on a GPU
+
+1. Read the file format
+
+  * Define a rectangular region to iterate over
+  * Specification of fixed vs fluid areas
+  * Digitization of a plane
+
+2. Normal loop
+
+  * Compute average of neighbors
+  * Compute delta values
+  * Reduce delta values --> max delta
+  * Repeat until max delta < tolerance
+
+Steps
+-----
+
+1. Compute new values
+2. Compute delta
+3. One step of the reduce
+
+Use only two arrays, don't copy values around, simply swap source
+and destination. After log n computation steps, a reduced max value should
+be available.
+
+ZPL
+===
+
+"Z Level" Programming Language, old and starting to bitrot
+
+Poker
+-----
+
+An IDE for parallel programs, used the XX language.
+
+Computations proceed in a 'phase' which can have a totally different connection
+structure. Each procesor ran XX code that were short programs defining what
+an individual node should do (*Y Level code*). The connection structure was 
+defined in *X Level Code*. Switching between phases to define the complete
+algorithm was *Z Level Code*. For poker, a very simple scripting language
+was used.
+
+Program in the Z Level
+----------------------
+
+Developed at University of Washington.
+
+* Doesn't have a GUI
+* Doesn't specify computing elements
+* Very high level parallel array processing language.
+* A research langugae, no wide adoption, no active development
+* A *global view* language: see everything, allow the compiler to split
+  up the work.
+
+Regions in ZPL
+--------------
+
+Cartesian coordinate systems are a first class concept in ZPL::
+
+    region R = [ 1..n, 1..n ];
+    region inR = [ 2..n-1, 2..n-1 ];
+
+Directions are defined as simple vectors::
+
+    direction West = [ -1,0 ]
+    direction East = [ 1,0 ]
+    direction SW = [ -1, -1 ]
+    direction NE = [ 1, 1 ]
+
+Region modifiers::
+
+    region left = West in R;        // inside the region
+    region lleft = West of inR;     // outside the region
+    region 1inR = inR at West;      // move the whole region
+
+    direction step = [ 1, 2 ];
+    region strip = R by step;       // every other column
+
+There are no arrays in ZPL. Only regions -- *parallel arrays*
+
+Doing array operations
+----------------------
+
+Region of data::
+    
+    var a,b,c : [R] double;
+    var d : [InR] double;
+
+Assignment and operations::
+
+    [R] a := b;         // full region assignment
+    [InR] a := b;       // only assign the inner region
+
+This works because InR is a sub-region of R. The Region is not tied to
+the data, each of a, b, c define a set of data across the region. Other
+regions which are sub-regions of R are valid region qualifiers for
+operations. The compiler handles the details of making this work.
+
+Other operations::
+
+    [R] a := b + c;     // complete matrix addition
+    [InR] d := a + b;   // all expressions are qualified by region InR
+
+    var sum : double;   // << is the reduction operation, + is the operation
+    [R] sum =: +<< a;   // reduction, sum is a scalar so R applies to a only
+
+    var f,g : [ 1..n ] integer;
+    [ 1..n ] f := +|| g;    // prefix sum operator (||)
+
+Reduction and prefix operations::
+
+    + * min max | & bor band userfunc(assoc and commutative)
+
+Flood operation::
+
+    [R] A := >>[1..n,i] A;
+
+Each row recieves the value at the *i* th column of A. One dimension is fixed,
+the value at this dimension floods into the other dimension(s).
+
+Shattered Control Flow
+----------------------
+
+If statements over a region spawn enough threads to run the if statement
+on all of the data. Each thread may do a different thing depending on the
+condition.

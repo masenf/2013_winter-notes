@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="11.5.1">
+  <zoom_level>9</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>225</x>
+      <y>153</y>
+      <w>189</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+Ver1
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>459</x>
+      <y>153</y>
+      <w>189</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+Ver2
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>270</x>
+      <y>270</y>
+      <w>90</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>ClassV1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>504</x>
+      <y>270</y>
+      <w>90</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>ClassV2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>288</x>
+      <y>162</y>
+      <w>44</w>
+      <h>125</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>27;27;27;108</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>522</x>
+      <y>162</y>
+      <w>44</w>
+      <h>125</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>27;27;27;108</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>342</x>
+      <y>162</y>
+      <w>215</w>
+      <h>125</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>27;27;27;72;198;72;198;108</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>45</x>
+      <y>270</y>
+      <w>90</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>ClassV2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>45</x>
+      <y>171</y>
+      <w>90</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>ClassV1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>63</x>
+      <y>171</y>
+      <w>44</w>
+      <h>116</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>27;27;27;99</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>261</x>
+      <y>387</y>
+      <w>90</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>A
+--
+x: Float</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>405</x>
+      <y>387</y>
+      <w>90</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>B
+--
+x: Integer</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>333</x>
+      <y>504</y>
+      <w>90</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>C</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>351</x>
+      <y>405</y>
+      <w>116</w>
+      <h>116</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>99;27;99;72;27;72;27;99</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>279</x>
+      <y>405</y>
+      <w>116</w>
+      <h>116</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>27;27;27;72;99;72;99;99</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Text</type>
+    <coordinates>
+      <x>432</x>
+      <y>486</y>
+      <w>162</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>Multiple inheritence:
+
+What is the value of C.x?</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Text</type>
+    <coordinates>
+      <x>567</x>
+      <y>198</y>
+      <w>207</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>Can run into issues where
+functions change their semantics
+across versions of the interface.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Text</type>
+    <coordinates>
+      <x>27</x>
+      <y>99</y>
+      <w>135</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>New classes simply
+inherit from the 
+previous version</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Text</type>
+    <coordinates>
+      <x>297</x>
+      <y>54</y>
+      <w>288</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>New classes implement the old interface AND
+the new interface.
+ 
+The new class then works
+in the old code</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

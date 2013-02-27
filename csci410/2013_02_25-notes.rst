@@ -1,0 +1,116 @@
+
+=========================
+CSCI 410 Notes 2013/02/25
+=========================
+
+Type
+====
+
+*A set of values and a set of operations which are defined over those
+values*
+
+A type provides *implicity context*. The types of two operands may provide 
+more information about the operation being performed. For instance, '+'
+may mean very different things if the types are **int** or **string**.
+
+Types also allow for compile and run-time checking to catch programming
+errors and meaningless parameters.
+
+Type System
+===========
+
+A collection of semantics and basic types which form the core of a typed 
+programming language. Need to define:
+
+  * Discrete types
+  * Scalar types
+  * Composite or structured types
+
+A type system has rules for:
+
+  * Type equivalence: *when are the types of two values the same*
+  * Type compatibility: *which types can be used in a context expecting other types*
+  * Type inference: *define the type of a resulting expressing given the two operand types*
+
+Statically Typed Languages
+==========================
+
+Essentially, *the type of every expression can be determined at compile time*.
+
+Examples include: Java, C#, Ada, Pascal, C, C++
+
+Dynamically Typed Languages
+===========================
+
+The types of expressions *are not known until runtime*. Generally the type of a 
+variable can change dynamically during the execution of the program.
+
+Examples include: Scheme, Smalltalk, python, ruby, perl, php
+
+Strongly Typed vs. Weakly Typed
+===============================
+
+Strongly Typed:
+    Informally: the language prevents you from applying an operation to data on which
+    it is not appropriate.
+
+    A type error can always be detected.
+Weakly typed:
+    NOT strongly typed.
+
+Type Equivalence
+================
+
+Name equivalence: *two types are the same if they share the same name*
+
+Structural equivalence: *two types are the same if they share the same structure*.
+Structural equivalence depends on simple comparison of type descriptions 
+substitute out all names
+
+Name equivalence tends to prevail today.
+
+Example:
+
+.. code:: ada
+
+    A : array(1 .. 10) of BOOLEAN;
+    B : array(1 .. 10) of BOOLEAN;
+
+    C, D : array(1 .. 10) of BOOLEAN;
+
+In ada, A and B are different types, while C and D are the same type.
+
+Are the bounds part of an array type?
+
+  * Pascal originally said yes
+  * Now it's generally agreed that they shouldn't be
+
+Are *alias* types equivalent?
+
+  * Strict name equivalence: aliased types are distinct
+  * Loose name equivalence: aliased types are equivalent
+  * Ada allows you to explicitly control equivalence:
+
+.. code:: ada
+     
+    subtype Stack_Element is integer;
+    type Celsius is new real;
+    type Fahrenheit is new real;
+
+Stack_Element and integer are compatible. Celsius and Fahrenheit are NOT.
+
+Type Compatibility
+==================
+
+Type conversion (cast). Some casts require changing the underlying bits. 
+For example, from int --> float, the representation must change in memory.
+For going from int --> long, the representation doesn't have to change.
+
+Type coercion is an implicit type conversion between compatible but not
+necessarily equivalent types. This is sometimes seen as a weakening of
+the type security of the system.
+
+When you see '+', is it overloaded '+' or coercing '+'?
+
+How to handle constants? Is '5' a float or an int. Also, what is
+the base type for a null ref.

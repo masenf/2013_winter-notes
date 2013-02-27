@@ -1,0 +1,59 @@
+
+=========================
+CSCI497a Notes 2013/02/13
+=========================
+
+CUDA Code
+=========
+
+Device memory management
+------------------------
+
+* cudaMalloc
+* cudaMemcpy
+* cudaMemcpyDeviceToHost
+* cudaMemcpyDeviceToDevice
+
+Kernel call
+-----------
+
+Starting a global function::
+
+    functionname<<<dimGrid, dimBlock>>>(args)
+
+* args may be pointers to *device global memory* or plain values
+* total threads is dimGrid * dimBlock: all are started at once
+
+  * Both grid (of blocks) and blocks (of threads) are virtual 3d grids
+  * Using integers or dim3 (c++ 3d coord)
+  * gridDim.{x|y|z} blockIdx.{x|y|z}, locating the current block in the grid
+  * blockDim.{x|y|z} threadIdz.{x|y|z}, locating the thread in the block
+
+* a Kernal call doesn't block when it is fired
+
+  * cudaThreadSynchronize(); // called on the host, blocks until all kernels are finished
+  * err = cudaGetLastError(); // also appears to block
+
+Examples
+--------
+
+``/usr/local/cuda/samples``
+
+``EXTRA_NVCCFLAGS=--compiler-bindir=/usr/bin/gcc-4.6``
+
+``/usr/local/cuda/bin/nvcc``
+
+Synchronization
+---------------
+
+* __syncthreads() works in a single block
+* Threads across blocks can not synchronize with each other
+* There are atomic operations that execute without *pre-emition*
+  
+  * atomicAdd
+  * atomicExch
+  * atomicCAS
+  * atomicMin, Max, And, Or, ...
+  * better to use cudaThreadSynchronize() from the host instead of
+    hacking custom semaphores to use on the device.
+
